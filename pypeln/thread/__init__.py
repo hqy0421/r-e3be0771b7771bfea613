@@ -36,6 +36,19 @@ from .api.each import each
 from .api.filter import filter
 from .api.flat_map import flat_map
 from .api.from_iterable import from_iterable
+from .api.join import (
+    CLOSE,
+    Close,
+    JoinResult,
+    Watermark,
+    full_outer_join,
+    interval_join,
+    interval_outer_join,
+    join,
+    join_interval,
+    outer_join,
+    temporal_join,
+)
 from .api.map import map
 from .api.ordered import ordered
 from .api.run import run

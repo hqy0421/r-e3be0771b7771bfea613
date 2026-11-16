@@ -27,18 +27,24 @@ module_docs = """
 
 
 structure = ""
+
+# functions that only exist on a specific module (e.g. `join` is thread only)
+EXTRA = {
+    "thread": ["join"],
+}
+
 for module in ["process", "thread", "task", "sync"]:
     structure += f"      - {module}:\n"
     structure += f"          Overview: api/{module}/Overview.md\n"
     members = ""
 
-    for f in sorted(
-        [
-            f.__name__
-            for f in vars(pl.process).values()
-            if inspect.isfunction(f) and "api" in inspect.getmodule(f).__name__
-        ]
-    ):
+    functions = [
+        f.__name__
+        for f in vars(pl.process).values()
+        if inspect.isfunction(f) and "api" in inspect.getmodule(f).__name__
+    ] + EXTRA.get(module, [])
+
+    for f in sorted(functions):
         structure += f"          {f}: api/{module}/{f}.md\n"
         members += "* [{f}]({f}.md)\n".format(f=f)
 
